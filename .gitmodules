@@ -1,0 +1,3 @@
+[submodule "qt_framework/extended_qt_widgets/example_extended_qt_widgets/extended-qt-widgets"]
+	path = qt_framework/extended_qt_widgets/example_extended_qt_widgets/extended-qt-widgets
+	url = https://github.com/zero80517/extended-qt-widgets
