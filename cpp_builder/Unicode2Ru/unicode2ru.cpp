@@ -39,17 +39,18 @@ Unicode2Ru::Unicode2Ru()
 QString Unicode2Ru::DecodeFromDfm(const QString& encoded_text)
 {
     QString decoded_text; decoded_text.reserve(encoded_text.size() / 5);// #xxxx = 5 encoded symbols per decoded symbol
-    QStringList encoded_words = encoded_text.split("' '");
 
-    for (int i = 0; i < encoded_words.size(); i++) {
-        const QString &encoded_word = encoded_words[i];
-        QStringList encoded_symbols = encoded_word.split("#");
+    QRegExp rx("(#\\d{4}|' ')");
+    int pos = 0;
 
-        for (const QString &encoded_symbol : encoded_symbols)
-            decoded_text += dec_code[encoded_symbol];
+    while ((pos = rx.indexIn(encoded_text, pos)) != -1) {
+        QString match = rx.cap(1).replace("#", "");
 
-        if (i < encoded_words.size() - 1)
+        if (match == "' '")
             decoded_text += ' ';
+        else
+            decoded_text += dec_code[match];
+        pos += rx.matchedLength();
     }
 
     return decoded_text;
