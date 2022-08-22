@@ -19,6 +19,10 @@ public:
      * @brief Декодировать текст с .dfm файла.
      */
     QString DecodeFromDfm(const QString& encoded_text);
+    /**
+     * @brief Закодировать текст в .dfm файл.
+     */
+    QString EncodeToDfm(const QString& text);
 
     QMap<QString,QString> hex_code;///< отображение hex кодировки в ру символ
     QMap<QString,QString> dec_code;///< отображение dec кодировки в ру символ

@@ -55,3 +55,19 @@ QString Unicode2Ru::DecodeFromDfm(const QString& encoded_text)
 
     return decoded_text;
 }
+
+QString Unicode2Ru::EncodeToDfm(const QString& text)
+{
+    QString encoded_text; encoded_text.reserve(encoded_text.size() * 5);// #xxxx = 5 encoded symbols per decoded symbol
+
+    for (auto s : text) {
+        if (s == ' ') {
+            encoded_text += "' '";
+            continue;
+        }
+        if (dec_code.key(s, "") != "")
+            encoded_text += "#" + dec_code.key(s);
+    }
+
+    return encoded_text;
+}
