@@ -2,6 +2,11 @@
 #define EXAMPLES_H
 
 /**
+ * @brief Для линукса ничего настраивать не надо. Все работает и с string
+ */
+void exampleLinuxOnly();
+
+/**
  * @brief Использование setlocale с wstring
  *
  * @details
@@ -13,7 +18,7 @@
 void example1();
 
 /**
- * @brief Использование SetConsoleCP и локальных однобитных кодировок с string
+ * @brief (best) Использование SetConsoleCP и локальных однобитных кодировок с string
  *
  * @details
  * Плюсы:
