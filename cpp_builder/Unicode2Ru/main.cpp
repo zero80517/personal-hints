@@ -1,7 +1,6 @@
 #include <QCoreApplication>
 #include <QDebug>
 #include <iostream>
-#include <windows.h>
 
 #include "unicode2ru.h"
 
@@ -30,14 +29,14 @@ int main(int argc, char *argv[])
     for(;;) {
         std::cout << TO_STD_STR("Введите строку для кодирования: ");
         std::getline(std::cin, str);
-        str = TO_STD_STR(unicode2ru.EncodeToDfm(TO_QSTR(str)));
+        str = unicode2ru.EncodeToDfm(TO_QSTR(str)).toStdString();
         std::cout << str << std::endl << std::endl;
     }
 #else
     for(;;) {
         std::cout << TO_STD_STR("Введите строку для декодирования: ");
         std::getline(std::cin, str);
-        str = TO_STD_STR(unicode2ru.DecodeFromDfm(TO_QSTR(str)));
+        str = unicode2ru.DecodeFromDfm(TO_QSTR(str)).toStdString();
         std::cout << str << std::endl << std::endl;
     }
 #endif
