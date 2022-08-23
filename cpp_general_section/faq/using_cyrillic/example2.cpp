@@ -18,16 +18,14 @@ void example2()
 #if _WIN32
     SetConsoleCP(1251); // Ввод с консоли в кодировке 1251
     SetConsoleOutputCP(1251); // Вывод на консоль в кодировке 1251. Нужно только будет изменить шрифт консоли на Lucida Console или Consolas
-#elif __linux__
-    setlocale(LC_ALL,"ru_RU.UTF-8");
 #endif
 
     std::string str;
 
     for(;;) {
         std::cout << TO_STD_STR("Это строка - пример правильного вывода в консоль") << std::endl;
-        std::cout << "Это строка - пример неправильного вывода в консоль, "
-                     "потому что исходники могут быть в кодировке UTF-8. "
+        std::cout << "Это строка - пример неправильного вывода в консоль (для win), "
+                     "потому что исходники чаще всего в кодировке UTF-8. "
                      "Если бы исходники были в кодировке 1251, то все было бы нормально."
                   << std::endl;
         std::cout << TO_STD_STR("Напиши что-нибудь здесь: ");
@@ -36,7 +34,7 @@ void example2()
                                      << TO_QSTR(str) << "\"";
         std::cout << TO_STD_STR("Получил следующую строку string (в кавычках чтоб наверняка): \"")
                   << str << "\"" << std::endl;
-        std::cout << TO_STD_STR("Длина строки: ") << str.length() << std::endl;
+        std::cout << TO_STD_STR("Длина строки (дает неправильный ответ для linux): ") << str.length() << std::endl;
         std::cout << std::endl;
     }
 }
