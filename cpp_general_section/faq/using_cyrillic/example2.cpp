@@ -1,10 +1,12 @@
 #if _WIN32
-#define TO_STD_STR(text) QString(text).toLocal8Bit().toStdString()
-#define TO_QSTR(text) QString::fromLocal8Bit(text.c_str(), text.size())
-#include <windows.h>
+# define Char2StdStr(text) QString(text).toLocal8Bit().toStdString()
+# define StdStr2QStr(text) QString::fromLocal8Bit(text.c_str(), text.size())
+# define QStr2StdStr(text) text.toLocal8Bit().toStdString()
+# include <windows.h>
 #elif __linux__
-#define TO_STD_STR(text) std::string(text)
-#define TO_QSTR(text) QString::fromStdString(text)
+# define Char2StdStr(text) std::string(text)
+# define StdStr2QStr(text) QString::fromStdString(text)
+# define QStr2StdStr(text) text.toStdString()
 #endif
 
 #include <iostream>
@@ -23,18 +25,18 @@ void example2()
     std::string str;
 
     for(;;) {
-        std::cout << TO_STD_STR("Это строка - пример правильного вывода в консоль") << std::endl;
+        std::cout << Char2StdStr("Это строка - пример правильного вывода в консоль") << std::endl;
         std::cout << "Это строка - пример неправильного вывода в консоль (для win), "
                      "потому что исходники чаще всего в кодировке UTF-8. "
                      "Если бы исходники были в кодировке 1251, то все было бы нормально."
                   << std::endl;
-        std::cout << TO_STD_STR("Напиши что-нибудь здесь: ");
+        std::cout << Char2StdStr("Напиши что-нибудь здесь: ");
         std::getline(std::cin, str);
         qDebug().noquote().nospace() << "Получил следующую строку QString (в кавычках чтоб наверняка): \""
-                                     << TO_QSTR(str) << "\"";
-        std::cout << TO_STD_STR("Получил следующую строку string (в кавычках чтоб наверняка): \"")
+                                     << StdStr2QStr(str) << "\"";
+        std::cout << Char2StdStr("Получил следующую строку string (в кавычках чтоб наверняка): \"")
                   << str << "\"" << std::endl;
-        std::cout << TO_STD_STR("Длина строки (дает неправильный ответ для linux): ") << str.length() << std::endl;
+        std::cout << Char2StdStr("Длина строки (дает неправильный ответ для linux): ") << str.length() << std::endl;
         std::cout << std::endl;
     }
 }

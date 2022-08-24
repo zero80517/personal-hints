@@ -7,12 +7,14 @@
 //#define ENCODE  // comment to decode input string
 
 #if _WIN32
-#define TO_STD_STR(text) QString(text).toLocal8Bit().toStdString()
-#define TO_QSTR(text) QString::fromLocal8Bit(text.c_str(), text.size())
-#include <windows.h>
+# define Char2StdStr(text) QString(text).toLocal8Bit().toStdString()
+# define StdStr2QStr(text) QString::fromLocal8Bit(text.c_str(), text.size())
+# define QStr2StdStr(text) text.toLocal8Bit().toStdString()
+# include <windows.h>
 #elif __linux__
-#define TO_STD_STR(text) std::string(text)
-#define TO_QSTR(text) QString::fromStdString(text)
+# define Char2StdStr(text) std::string(text)
+# define StdStr2QStr(text) QString::fromStdString(text)
+# define QStr2StdStr(text) text.toStdString()
 #endif
 
 int main(int argc, char *argv[])
@@ -27,16 +29,16 @@ int main(int argc, char *argv[])
 
 #ifdef ENCODE
     for(;;) {
-        std::cout << TO_STD_STR("Введите строку для кодирования: ");
+        std::cout << Char2StdStr("Введите строку для кодирования: ");
         std::getline(std::cin, str);
-        str = unicode2ru.EncodeToDfm(TO_QSTR(str)).toStdString();
+        str = QStr2StdStr(unicode2ru.EncodeToDfm(StdStr2QStr(str)));
         std::cout << str << std::endl << std::endl;
     }
 #else
     for(;;) {
-        std::cout << TO_STD_STR("Введите строку для декодирования: ");
+        std::cout << Char2StdStr("Введите строку для декодирования: ");
         std::getline(std::cin, str);
-        str = unicode2ru.DecodeFromDfm(TO_QSTR(str)).toStdString();
+        str = QStr2StdStr(unicode2ru.DecodeFromDfm(StdStr2QStr(str)));
         std::cout << str << std::endl << std::endl;
     }
 #endif
